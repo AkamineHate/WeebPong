@@ -15,8 +15,14 @@ const app = express()                        // Creating a variable: app, to rec
     , io = Io(server)
     ;
 
-let players = [];
+const speed = 1;
+const leftPosition = 44;
+const rightPosition = 44;
+const paddleHeight = 12;
+const leftSpeed = 0;
+const rightSpeed = 0;
 
+let players = [];
 
 
 /* MIDDLEWARE TO LOOK AT THE REQUEST BEFORE HANDLING IT */
@@ -43,7 +49,15 @@ function startSocketServer() {
         }
 
         if(players.length === 2) {
-          io.emit('ikuzo', 'ikuzo bakayaro');
+          io.emit('ikuzo', {
+            speed
+            , leftPosition
+            , rightPosition
+            , paddleHeight
+            , leftSpeed
+            , rightSpeed
+        });
+
         }
 
         if(players.length === 1) {
