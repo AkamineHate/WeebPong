@@ -15,12 +15,12 @@ const app = express()                        // Creating a variable: app, to rec
     , io = Io(server)
     ;
 
-const speed = 1;
-const leftPosition = 44;
-const rightPosition = 44;
-const paddleHeight = 12;
-const leftSpeed = 0;
-const rightSpeed = 0;
+let speed = 1;
+let leftPosition = 44;
+let rightPosition = 44;
+let paddleHeight = 12;
+let leftSpeed = 0;
+let rightSpeed = 0;
 
 let players = [];
 
@@ -67,6 +67,36 @@ function startSocketServer() {
         // LETS DETERMINE WHEN THE USER DISCONNECTS
         socket.on('disconnect', function() {
             players = players.filter(player => player.id !== socket.id)
+        });
+
+        socket.on('leftPaddleUp', function() {
+            leftSpeed = -1*speed
+            io.emit('leftPaddleUp', { leftSpeed } )
+        });
+
+        socket.on('leftPaddleStop', function() {
+            leftSpeed = 0
+            io.emit('leftPaddleStop', { leftSpeed } )
+        });
+
+        socket.on('leftPaddleDown', function() {
+            leftSpeed = speed
+            io.emit('leftPaddleDown', { leftSpeed } )
+        });
+
+        socket.on('rightPaddleUp', function() {
+            rightSpeed = -1*speed
+            io.emit('rightPaddleUp', { rightSpeed} )
+        });
+
+        socket.on('rightPaddleStop', function() {
+            rightSpeed = 0
+            io.emit('rightPaddleStop', { rightSpeed } )
+        });
+
+        socket.on('rightPaddleDown', function() {
+            rightSpeed = speed
+            io.emit('rightPaddleDown', { rightSpeed } )
         });
 
     });
