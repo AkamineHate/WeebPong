@@ -21,6 +21,9 @@ let rightPosition = 44;
 let paddleHeight = 12;
 let leftSpeed = 0;
 let rightSpeed = 0;
+let ballSpeed = 1;
+let angle;
+let direction;
 
 let players = [];
 
@@ -49,6 +52,8 @@ function startSocketServer() {
         }
 
         if(players.length === 2) {
+          direction = Math.random() <= 0.5 ? -1 : 1;
+          angle = Math.random() -0.5)*Math.PI/2
           io.emit('ikuzo', {
             speed
             , leftPosition
@@ -56,6 +61,9 @@ function startSocketServer() {
             , paddleHeight
             , leftSpeed
             , rightSpeed
+            , angle
+            , direction
+            , ballSpeed
         });
 
         }
