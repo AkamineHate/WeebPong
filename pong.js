@@ -53,7 +53,7 @@ function startSocketServer() {
 
         if(players.length === 2) {
           direction = Math.random() <= 0.5 ? -1 : 1;
-          angle = Math.random() -0.5)*Math.PI/2
+          angle = (Math.random() -0.5)*Math.PI/2
           io.emit('ikuzo', {
             speed
             , leftPosition
