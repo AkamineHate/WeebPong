@@ -22,7 +22,7 @@ let paddleHeight = 12;
 let leftSpeed = 0;
 let rightSpeed = 0;
 let ballSpeed = 1;
-let ballSize = 6;
+let ballSize = 3;
 let ballPosition = { x: 50, y:50};
 
 let angle;
@@ -68,6 +68,7 @@ function startSocketServer() {
             , direction
             , ballSpeed
             , ballSize
+            , ballPosition
         });
 
         }
