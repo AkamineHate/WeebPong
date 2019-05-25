@@ -24,6 +24,7 @@ let rightSpeed = 0;
 let ballSpeed = 1;
 let ballSize = 3;
 let ballPosition = { x: 50, y:50};
+let score = {left: 0 , right: 0};
 
 let angle;
 let direction;
@@ -50,26 +51,32 @@ app.get('/', (req, res, next) => {            // Recieving a request from the cl
 function startSocketServer() {
     io.on('connection', function(socket) {
         players.push(socket);
+
+        function initialize {
+            direction = Math.random() <= 0.5 ? -1 : 1;
+            angle = (Math.random() -0.5)*2*Math.PI/3
+            io.emit('ikuzo', {
+              speed
+              , score
+              , leftPosition
+              , rightPosition
+              , paddleHeight
+              , leftSpeed
+              , rightSpeed
+              , angle
+              , direction
+              , ballSpeed
+              , ballSize
+              , ballPosition
+            });
+        }
+
         if(players.length > 2) {
           socket.emit('idinahui','idi nahui blyat');
         }
 
         if(players.length === 2) {
-          direction = Math.random() <= 0.5 ? -1 : 1;
-          angle = (Math.random() -0.5)*2*Math.PI/3
-          io.emit('ikuzo', {
-            speed
-            , leftPosition
-            , rightPosition
-            , paddleHeight
-            , leftSpeed
-            , rightSpeed
-            , angle
-            , direction
-            , ballSpeed
-            , ballSize
-            , ballPosition
-        });
+            initialize()
 
         }
 
@@ -111,6 +118,16 @@ function startSocketServer() {
             rightSpeed = speed
             io.emit('rightPaddleDown', { rightSpeed } )
         });
+
+        socket.on('rightBallPass', function() {
+            score.right++;
+            initialize()
+        })
+
+        socket.on('leftBallPass', function() {
+            score.right++;
+            initialize()
+        })
 
     });
 }
