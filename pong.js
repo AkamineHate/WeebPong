@@ -52,7 +52,7 @@ function startSocketServer() {
     io.on('connection', function(socket) {
         players.push(socket);
 
-        function initialize {
+        function initialize() {
             direction = Math.random() <= 0.5 ? -1 : 1;
             angle = (Math.random() -0.5)*2*Math.PI/3
             io.emit('ikuzo', {
